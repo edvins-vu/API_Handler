@@ -1,8 +1,0 @@
-{
-  "BaseUrl": "https://exampleapi.com/",
-  "AuthToken": "your_api_token_here",
-  "Endpoints": {
-    "GetPlayerData": "players/data",
-    "Login": "auth/login"
-  }
-}
