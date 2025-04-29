@@ -5,44 +5,35 @@ using System.Threading.Tasks;
 
 public class APIManager
 {
-    private static readonly HttpClient client = new HttpClient();
-    private static APIConfig config = APIConfig.LoadConfig();
+    private readonly HttpClient _httpClient;
+    private readonly APIConfig _config;
 
-    //private readonly HttpClient _httpClient;
-    //private readonly APIConfig _config;
-
-	//public APIManager(HttpClient httpClient, APIConfig config)
-	//{
-	//	_httpClient = httpClient;
-	//	_config = config;
-	//}
-
-	/// <summary>
-	/// Sends a request to the configured API.
-	/// </summary>
-	/// <param name="endpointKey">Key name of the API endpoint in config</param>
-	/// <param name="method">HTTP method (GET, POST, etc.)</param>
-	/// <param name="jsonPayload">Optional JSON payload</param>
-	/// <returns>API response as a string</returns>
-	public static async Task<string> SendRequest(string endpointKey, HttpMethod method, string jsonPayload = null)
+    public APIManager(HttpClient httpClient, APIConfig config)
     {
-        if (!config.Endpoints.ContainsKey(endpointKey))
+        _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
+        _config = config ?? throw new ArgumentNullException(nameof(config));
+    }
+
+    /// <summary>
+    /// Sends a request to the configured API.
+    /// </summary>
+    public async Task<string> SendRequest(string endpointKey, HttpMethod method, string jsonPayload = null)
+    {
+        if (!_config.Endpoints.ContainsKey(endpointKey))
             throw new ArgumentException($"Invalid API endpoint key: {endpointKey}");
 
-        string url = $"{config.BaseUrl}{config.Endpoints[endpointKey]}";
-
+        string url = $"{_config.BaseUrl}{_config.Endpoints[endpointKey]}";
         HttpRequestMessage request = new HttpRequestMessage(method, url);
 
-        // Attach authentication token if available
-        if (!string.IsNullOrEmpty(config.AuthToken))
-            request.Headers.Add("Authorization", $"Bearer {config.AuthToken}");
+        if (!string.IsNullOrEmpty(_config.AuthToken))
+            request.Headers.Add("Authorization", $"Bearer {_config.AuthToken}");
 
         if (!string.IsNullOrEmpty(jsonPayload))
             request.Content = new StringContent(jsonPayload, System.Text.Encoding.UTF8, "application/json");
 
         try
         {
-            HttpResponseMessage response = await client.SendAsync(request);
+            HttpResponseMessage response = await _httpClient.SendAsync(request);
             response.EnsureSuccessStatusCode();
             return await response.Content.ReadAsStringAsync();
         }
