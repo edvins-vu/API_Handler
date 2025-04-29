@@ -1,8 +1,9 @@
 {
-  "BaseUrl": "https://exampleapi.com/",
-  "AuthToken": "your_api_token_here",
-  "Endpoints": {
-    "GetPlayerData": "players/data",
-    "Login": "auth/login"
-  }
+    "BaseUrl": "https://dogapi.dog/api/v2/",
+    "AuthToken": "your_dog_api_key_here",
+    "Endpoints": {
+        "GetBreeds": "breeds/",
+        "GetRandomDogImage": "images/random",
+        "GetFacts": "facts?limit=1"
+    }
 }
