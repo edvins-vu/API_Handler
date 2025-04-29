@@ -8,14 +8,23 @@ public class APIManager
     private static readonly HttpClient client = new HttpClient();
     private static APIConfig config = APIConfig.LoadConfig();
 
-    /// <summary>
-    /// Sends a request to the configured API.
-    /// </summary>
-    /// <param name="endpointKey">Key name of the API endpoint in config</param>
-    /// <param name="method">HTTP method (GET, POST, etc.)</param>
-    /// <param name="jsonPayload">Optional JSON payload</param>
-    /// <returns>API response as a string</returns>
-    public static async Task<string> SendRequest(string endpointKey, HttpMethod method, string jsonPayload = null)
+    //private readonly HttpClient _httpClient;
+    //private readonly APIConfig _config;
+
+	//public APIManager(HttpClient httpClient, APIConfig config)
+	//{
+	//	_httpClient = httpClient;
+	//	_config = config;
+	//}
+
+	/// <summary>
+	/// Sends a request to the configured API.
+	/// </summary>
+	/// <param name="endpointKey">Key name of the API endpoint in config</param>
+	/// <param name="method">HTTP method (GET, POST, etc.)</param>
+	/// <param name="jsonPayload">Optional JSON payload</param>
+	/// <returns>API response as a string</returns>
+	public static async Task<string> SendRequest(string endpointKey, HttpMethod method, string jsonPayload = null)
     {
         if (!config.Endpoints.ContainsKey(endpointKey))
             throw new ArgumentException($"Invalid API endpoint key: {endpointKey}");
