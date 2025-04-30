@@ -8,15 +8,6 @@ public class APIManager
     private static readonly HttpClient client = new HttpClient();
     private static APIConfig config = APIConfig.LoadConfig();
 
-    //private readonly HttpClient _httpClient;
-    //private readonly APIConfig _config;
-
-	//public APIManager(HttpClient httpClient, APIConfig config)
-	//{
-	//	_httpClient = httpClient;
-	//	_config = config;
-	//}
-
 	/// <summary>
 	/// Sends a request to the configured API.
 	/// </summary>
