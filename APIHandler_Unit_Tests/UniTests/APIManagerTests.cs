@@ -108,5 +108,60 @@ namespace APIHandler_Tests.UniTests
 			// Assert
 			Assert.Contains("Error:", result); // Should return an error message for invalid JSON
 		}
+
+		[Fact]
+		public async Task SendRequest_IncludesAuthorizationHeader_WhenAuthTokenExists()
+		{
+			// Arrange
+			string expectedToken = _setup.Config.AuthToken; // Get the token from config
+			_setup.SetupMockResponse(HttpStatusCode.OK, "{\"message\":\"Success\"}", expectedToken);
+
+			// Act
+			var result = await _setup.ApiManager.SendRequest("GetFacts", HttpMethod.Get);
+
+			// Assert
+			Assert.Contains("Success", result);
+		}
+
+		[Fact]
+		public async Task SendRequest_MissingAuthToken_ReturnsUnauthorized()
+		{
+			// Arrange
+			_setup.SetupMockResponse(HttpStatusCode.Unauthorized, "{\"error\":\"Unauthorized\"}", "valid_token");
+
+			// Act
+			var result = await _setup.ApiManager.SendRequest("GetFacts", HttpMethod.Get);
+
+			// Assert
+			Assert.Contains("Error:", result); // Should return an unauthorized error message
+		}
+
+		[Fact]
+		public async Task SendRequest_ApiReturnsEmptyResponse_ReturnsErrorMessage()
+		{
+			// Arrange
+			_setup.SetupMockResponse(HttpStatusCode.OK, ""); // Simulate empty response
+
+			// Act
+			var result = await _setup.ApiManager.SendRequest("GetFacts", HttpMethod.Get);
+
+			// Assert
+			Assert.NotNull(result);
+			Assert.Contains("Error:", result); // Should return a meaningful error
+		}
+
+		[Fact]
+		public async Task SendRequest_ApiReturnsUnexpectedFormat_ReturnsErrorMessage()
+		{
+			// Arrange
+			_setup.SetupMockResponse(HttpStatusCode.OK, @"{ ""message"": ""Unexpected format"" }"); // Incorrect structure
+
+			// Act
+			var result = await _setup.ApiManager.SendRequest("GetFacts", HttpMethod.Get);
+
+			// Assert
+			Assert.NotNull(result);
+			Assert.Contains("Error:", result); // API should recognize it's not the expected structure
+		}
 	}
 }

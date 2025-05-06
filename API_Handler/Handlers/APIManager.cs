@@ -1,5 +1,6 @@
 ﻿using API_Handler;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -31,9 +32,6 @@ namespace API_Handler
 			if (!string.IsNullOrEmpty(_config.AuthToken))
 				request.Headers.Add("Authorization", $"Bearer {_config.AuthToken}");
 
-			if (!string.IsNullOrEmpty(jsonPayload))
-				request.Content = new StringContent(jsonPayload, System.Text.Encoding.UTF8, "application/json");
-
 			try
 			{
 				HttpResponseMessage response = await _httpClient.SendAsync(request);
@@ -41,6 +39,9 @@ namespace API_Handler
 
 				string responseBody = await response.Content.ReadAsStringAsync();
 				JsonConvert.DeserializeObject<dynamic>(responseBody); // Test JSON validity
+
+				if (string.IsNullOrEmpty(responseBody))
+					return "Error: Empty response body.";
 
 				return responseBody;
 			}

@@ -20,20 +20,24 @@ namespace APIHandler_Tests.UniTests
 			Config = new APIConfig
 			{
 				BaseUrl = "https://dogapi.dog/api/v2/",
-				Endpoints = new Dictionary<string, string> 
-				{ 
-					{ "GetFacts", "facts?limit=1" } 
+				Endpoints = new Dictionary<string, string>
+				{
+					{ "GetFacts", "facts?limit=1" }
 				}
 			};
 			ApiManager = new APIManager(HttpClient, Config);
 		}
 
-		public void SetupMockResponse(HttpStatusCode statusCode, string content)
+		public void SetupMockResponse(HttpStatusCode statusCode, string content, string expectedAuthToken = null)
 		{
 			MockHandler
 				.Protected()
 				.Setup<Task<HttpResponseMessage>>("SendAsync",
-					ItExpr.IsAny<HttpRequestMessage>(),
+					ItExpr.Is<HttpRequestMessage>(req =>
+						expectedAuthToken == null || // No token required case
+						(req.Headers.Contains("Authorization") && 
+						req.Headers.Authorization != null &&
+						req.Headers.Authorization.Parameter == expectedAuthToken)), // Explicit null check
 					ItExpr.IsAny<CancellationToken>())
 				.ReturnsAsync(new HttpResponseMessage
 				{
