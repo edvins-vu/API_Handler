@@ -5,7 +5,7 @@ VisualStudioVersion = 17.13.35828.75
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API_Handler", "API_Handler.csproj", "{C791209A-3DB8-4E56-BC79-8FADA03A772F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API_Tests", "..\API_Tests\API_Tests.csproj", "{EE742950-69CF-4F31-A08E-E75006BB1DD5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIHandler_Tests", "..\APIHandler_Unit_Tests\APIHandler_Tests.csproj", "{64D124F1-DC07-441C-BDE3-08973DBCA9CB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{C791209A-3DB8-4E56-BC79-8FADA03A772F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C791209A-3DB8-4E56-BC79-8FADA03A772F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C791209A-3DB8-4E56-BC79-8FADA03A772F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EE742950-69CF-4F31-A08E-E75006BB1DD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EE742950-69CF-4F31-A08E-E75006BB1DD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EE742950-69CF-4F31-A08E-E75006BB1DD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EE742950-69CF-4F31-A08E-E75006BB1DD5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64D124F1-DC07-441C-BDE3-08973DBCA9CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64D124F1-DC07-441C-BDE3-08973DBCA9CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64D124F1-DC07-441C-BDE3-08973DBCA9CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64D124F1-DC07-441C-BDE3-08973DBCA9CB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
